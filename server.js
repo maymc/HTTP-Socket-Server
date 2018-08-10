@@ -1,16 +1,27 @@
-const net = require("net");
+const http = require("http");
 
-const server = net.createServer(client => {
-  //"Connect" listener
-  console.log("Client connected!");
-  client.write("hi");
+// const server = http.createServer(client => {
+//   //"Connect" listener
+//   console.log("Client connected!");
+//   client.write("hi");
 
-  client.on("data", data => {
-    console.log(data.toString());
-    let msg = data.toString();
-  });
+//   client.on("data", data => {
+//     console.log(data.toString());
+//     let msg = data.toString();
+//   });
 
-});
-server.listen(8080, () => {
-  console.log("Server listening on port 8080");
+// });
+
+const hostname = "0.0.0.0";
+const port = 8080;
+
+const server = http.createServer((req, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'test/plain');
+  res.end('Hello World\n');
+})
+
+
+server.listen(port, hostname, () => {
+  console.log("Server running at http://" + hostname + ':' + port + '/');
 });
