@@ -6,11 +6,11 @@ const server = net.createServer(client => {
   client.write("HTTP/1.x 200 OK\nServer: Ubuntu Server");
   client.on("data", data => {
     console.log(data.toString());
-    let msg = data.toString();
+    let msgFromClient = data.toString();
   });
-  
+
 });
-console.log('process.argv', process.argv)
+
 server.listen(8080, () => {
   console.log("Server listening on port 6969");
 });
