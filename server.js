@@ -1,47 +1,103 @@
 const net = require("net");
-const module404 = require("./404");
-const heliumModule = require("./helium");
-const hydrogenModule = require("./hydrogen");
-const indexModule = require("./index");
-const stylesModule = require("./css/styles");
-let requestedURI = null;
+const port = 8080;
+const { error404 } = require("./404.js");
+const { styles } = require("./css/styles.js");
+const { helium } = require("./helium.js");
+const { hydrogen } = require("./hydrogen.js");
+const { index } = require("./index.js");
 
-const server = net.createServer(client => {
-  //"Connect" listener
-  console.log("Client connected!\n");
+const server = net.createServer(socket => {
 
-  //Process.argv prints out on server side when the client.write above goes through on the client side.
-  // console.log("process.argv:\n", process.argv);
-
-  client.on("data", data => {
-    //console.log(data.toString());
-    let msgFromClient = data.toString();
+  socket.on("data", data => {
+    let msgFromClient = data.toString().split('\n');
     console.log("\nmsgFromClient:\n", msgFromClient);
-    let msgElements = msgFromClient.split(" ");
 
-    //console.log(msgFromClient.split(" "));
-    requestedURI = msgElements[1];
-    console.log("Requested URI: ", requestedURI);
+    //Get the request line and URI
+    let reqLine = msgFromClient[0].split(" ");
+    console.log("Request Line: ", reqLine);
+
+    let uri = reqLine[1];
+    console.log("URI:", uri);
+
+    let status = "HTTP/1.1 200 OK";
+    let date = new Date();
+    let serverName = "DevLeagueServer";
+
+    if (uri === "/css/styles.css") {
+      socket.write(`${status}\nDate: ${date}\nServer: ${serverName}\nContent-Type: text/css\n\n${styles}`);
+      socket.end();
+    }
+    else if (uri === "/helium") {
+      socket.write(`${status}\nDate: ${date}\nServer: ${serverName}\nContent-Type: *\n\n${helium}`);
+      socket.end();
+    }
+    else if (uri === "/hydrogen") {
+      socket.write(`${status}\nDate: ${date}\nServer: ${serverName}\nContent-Type: *\n\n${hydrogen}`);
+      socket.end();
+    }
+    else if (uri === "/" || uri === "/index") {
+      socket.write(`${status}\nDate: ${date}\nServer: ${serverName}\nContent-Type: *\n\n${index}`);
+      socket.end();
+    }
+    else {
+      console.log("Not Found");
+      socket.write(`${status}\nDate: ${date}\nServer: ${serverName}\nContent-Type: *\n\n${error404}`);
+      socket.end();
+    }
+
   });
-
-  //Transmit 'standard' HTTP Headers to the client. (So this is the response to client's request). HTTP Response is the server replying to the client's original HTTP Request with a message and the requested resource.
-  //HTTP Response includes a response message which is made with : A status line and response headers
-
-  //If path is not found in your routes, return 404 status code and output some text/html content
-  let date = new Date();
-
-  if (requestedURI === "/") {
-    client.write("HTTP/1.0 404 Not Found\nDate: " + date + "\nServer: DevLeagueServer\n\n");
-  }
-  else {
-    client.write("HTTP/1.0 404 Not Found\nDate: " + date + "\nServer: DevLeagueServer\n\n");
-  }
-
 });
 
 //Server listens on port 8080
-server.listen(8080, () => {
-  console.log("Server listening on port 6969");
+server.listen(port, () => {
+  console.log("Server listening on port 8080");
 });
 
 
+
+//Transmit 'standard' HTTP Headers to the client. (So this is the response to client's request). HTTP Response is the server replying to the client's original HTTP Request with a message and the requested resource.
+//HTTP Response includes a response message which is made with : A status line and response headers
+
+
+
+//create the server
+//important: socket.on is when data comes in
+//when data comes in from the browser, it'll have request line, request header, request body
+//need to put an if statement to catch it and send data back
+//need to parse it out /apply and isolate it. A request isn't static, not always slash. If it is a slash, put this in header, insert in index, etc
+//then after you create the server, you listen
+//need to end the request after each if statement
+
+//need to be able to handle 2 requests
+//uses same origin that the file comes from
+
+
+
+
+//////////////////////////////////////////////
+// const net = require("net");
+// const { index, css } = require('./markup');
+
+// const server = net.createServer(socket => {
+//   console.log("new connection detected");
+
+//   socket.on('data', data => {
+//     console.log('From Client: ', data.toString());
+//     const reqDataArr = data.toString().split('\n');
+//     const reqLine = reqDataArr[0];
+//     const reqUrl = reqLine.split(' ')[1];
+
+//     if (reqUrl === '/') {
+//       socket.write(`HTTP/1.1 200 OK\n\n${index}`);
+//       socket.end();
+//     }
+//     else if (reqUrl === 'css/styles.css') {
+//       socket.write(`HTTP/1.1 200 OK\n\n${css}`);
+//       socket.end();
+//     }
+//   });
+// });
+
+// server.listen(6969, () => {
+//   console.log('Server listening on 6969');
+// })

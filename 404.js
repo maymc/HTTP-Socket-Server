@@ -1,5 +1,4 @@
-let module404 = (function () {
-  `<!DOCTYPE html>
+let error404 = `<!DOCTYPE html>
   <html lang="en">
   <head>
     <meta charset="UTF-8">
@@ -14,5 +13,7 @@ let module404 = (function () {
     </p>
   </body>
   </html>`;
-})();
 
+module.exports = {
+  error404,
+}

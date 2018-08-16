@@ -1,5 +1,4 @@
-let hydrogenModule = (function () {
-  `<!DOCTYPE html>
+let hydrogen = `<!DOCTYPE html>
   <html lang="en">
   <head>
     <meta charset="UTF-8">
@@ -14,4 +13,7 @@ let hydrogenModule = (function () {
     <p><a href="/">back</a></p>
   </body>
   </html>`;
-})();
+
+module.exports = {
+  hydrogen,
+}

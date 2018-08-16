@@ -1,5 +1,4 @@
-let heliumModule = (function () {
-  `<!DOCTYPE html>
+let helium = `<!DOCTYPE html>
   <html lang="en">
   <head>
     <meta charset="UTF-8">
@@ -14,4 +13,7 @@ let heliumModule = (function () {
     <p><a href="/">back</a></p>
   </body>
   </html>`;
-})();
+
+module.exports = {
+  helium,
+}
