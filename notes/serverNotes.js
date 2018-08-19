@@ -64,3 +64,34 @@ server.listen(port, () => {
 //how do I get headers?
 // ---> need to send it from the client
 //Need to run server.js and then localhost:8080 on browser
+
+
+
+//Notes from Raymond
+//////////////////////////////////////////////
+// const net = require("net");
+// const { index, css } = require('./markup');
+
+// const server = net.createServer(socket => {
+//   console.log("new connection detected");
+
+//   socket.on('data', data => {
+//     console.log('From Client: ', data.toString());
+//     const reqDataArr = data.toString().split('\n');
+//     const reqLine = reqDataArr[0];
+//     const reqUrl = reqLine.split(' ')[1];
+
+//     if (reqUrl === '/') {
+//       socket.write(`HTTP/1.1 200 OK\n\n${index}`);
+//       socket.end();
+//     }
+//     else if (reqUrl === 'css/styles.css') {
+//       socket.write(`HTTP/1.1 200 OK\n\n${css}`);
+//       socket.end();
+//     }
+//   });
+// });
+
+// server.listen(6969, () => {
+//   console.log('Server listening on 6969');
+// })
