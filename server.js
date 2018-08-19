@@ -55,49 +55,9 @@ server.listen(port, () => {
 
 
 
-//Transmit 'standard' HTTP Headers to the client. (So this is the response to client's request). HTTP Response is the server replying to the client's original HTTP Request with a message and the requested resource.
-//HTTP Response includes a response message which is made with : A status line and response headers
-
-
-
-//create the server
-//important: socket.on is when data comes in
-//when data comes in from the browser, it'll have request line, request header, request body
-//need to put an if statement to catch it and send data back
-//need to parse it out /apply and isolate it. A request isn't static, not always slash. If it is a slash, put this in header, insert in index, etc
-//then after you create the server, you listen
-//need to end the request after each if statement
-
-//need to be able to handle 2 requests
-//uses same origin that the file comes from
 
 
 
 
-//////////////////////////////////////////////
-// const net = require("net");
-// const { index, css } = require('./markup');
 
-// const server = net.createServer(socket => {
-//   console.log("new connection detected");
 
-//   socket.on('data', data => {
-//     console.log('From Client: ', data.toString());
-//     const reqDataArr = data.toString().split('\n');
-//     const reqLine = reqDataArr[0];
-//     const reqUrl = reqLine.split(' ')[1];
-
-//     if (reqUrl === '/') {
-//       socket.write(`HTTP/1.1 200 OK\n\n${index}`);
-//       socket.end();
-//     }
-//     else if (reqUrl === 'css/styles.css') {
-//       socket.write(`HTTP/1.1 200 OK\n\n${css}`);
-//       socket.end();
-//     }
-//   });
-// });
-
-// server.listen(6969, () => {
-//   console.log('Server listening on 6969');
-// })
